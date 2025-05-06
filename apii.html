@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>API</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px;
+      color: #333;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+    }
+
+    .product img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .product h4 {
+      font-size: 16px;
+      color: #444;
+      margin: 10px 0;
+    }
+
+    .product p {
+      color: #008000;
+      font-weight: bold;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Product List</h1>
+  <div id="results" class="products"></div>
+
+  <script>
+    const results = document.getElementById("results");
+
+    fetch('https://fakestoreapi.com/products')
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(product => {
+          const div = document.createElement('div');
+          div.classList.add('product');
+
+          div.innerHTML = `
+            <img src="${product.image}" alt="${product.title}" />
+            <h4>${product.title}</h4>
+            <p>$${product.price}</p>
+          `;
+
+          results.appendChild(div);
+        });
+      });
+  </script>
+</body>
+</html>
